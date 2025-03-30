@@ -5,13 +5,14 @@ import { X, Menu, UserCircle, LogOut } from 'lucide-react' // for icons
 import { cn } from '@/lib/utils' // utility function for conditional classes
 import { useNavLink } from '@/hooks/customHooks' // custom hook for navigation link
 import ThemeButton from './ThemeButton'
+import Logo from './Logo'
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState<boolean>(false) // Added state for mobile menu
   const handleLinkClick = useNavLink(setMenuOpen) // Custom hook to handle link click
   // const { user, logout } = useContext(UserContext) // Assuming we have user and logout function
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false) // State for user menu
-  const [user, setUser] = useState(true);
+  const [user, setUser] = useState(true)
   const logout = () => {
     setIsUserMenuOpen(false)
     setUser(false) // Simulating logout
@@ -19,14 +20,14 @@ function Navbar() {
   }
 
   return (
-    <header className="border-b bg-white transition-colors duration-300 dark:bg-gray-900">
+    <header className="bg-background border-b transition-colors duration-300">
       <nav className="container mx-auto flex items-center justify-between p-4">
         {/* Logo */}
         <Link
           to="/"
-          className="text-2xl font-bold text-gray-800 transition-colors duration-300 hover:text-blue-500 dark:text-white dark:hover:text-blue-400"
+          className="text-foreground hover:text-primary text-2xl font-bold transition-colors duration-300"
         >
-          MyLogo
+          {<Logo />}
         </Link>
 
         {/* Navigation Links */}
@@ -35,8 +36,8 @@ function Navbar() {
             to="/"
             className={({ isActive }) =>
               cn(
-                'rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition-all duration-300 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800',
-                isActive && 'bg-gray-200 dark:bg-gray-800'
+                'text-foreground hover:bg-secondary rounded-md px-3 py-2 text-sm font-medium transition-all duration-300',
+                isActive && 'bg-secondary'
               )
             }
           >
@@ -46,8 +47,8 @@ function Navbar() {
             to="/about"
             className={({ isActive }) =>
               cn(
-                'rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition-all duration-300 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800',
-                isActive && 'bg-gray-200 dark:bg-gray-800'
+                'text-foreground hover:bg-secondary rounded-md px-3 py-2 text-sm font-medium transition-all duration-300',
+                isActive && 'bg-secondary'
               )
             }
           >
@@ -57,8 +58,8 @@ function Navbar() {
             to="/services"
             className={({ isActive }) =>
               cn(
-                'rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition-all duration-300 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800',
-                isActive && 'bg-gray-200 dark:bg-gray-800'
+                'text-foreground hover:bg-secondary rounded-md px-3 py-2 text-sm font-medium transition-all duration-300',
+                isActive && 'bg-secondary'
               )
             }
           >
@@ -66,37 +67,20 @@ function Navbar() {
           </NavLink>
         </div>
 
-        {/* Buttons: Login/Sign Up */}
-        {/* <div className="hidden space-x-4 md:flex">
-          <Link to="/login">
-            <Button
-              variant="outline"
-              className="transition-transform duration-300 hover:scale-105"
-            >
-              Login
-            </Button>
-          </Link>
-          <Link to="/signup">
-            <Button className="transition-transform duration-300 hover:scale-105">
-              Sign Up
-            </Button>
-          </Link>
-        </div> */}
-
         {/* Conditional Rendering Based on User Authentication */}
         <div className="flex items-center space-x-4">
           {!user ? (
             // Render Login/Signup Buttons when user is not logged in
             <>
               <Link to="/login">
-                <Button className="bg-blue-600 text-white hover:bg-blue-700">
+                <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
                   Log In
                 </Button>
               </Link>
               <Link to="/signup">
                 <Button
                   variant="outline"
-                  className="border-blue-600 text-blue-600 dark:text-blue-400"
+                  className="border-primary text-primary"
                 >
                   Sign Up
                 </Button>
@@ -107,30 +91,30 @@ function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center space-x-2 text-gray-700 dark:text-gray-300"
+                className="text-foreground flex items-center space-x-2"
               >
                 <UserCircle className="h-6 w-6" />
                 <span>{user?.username} hello</span>
               </button>
               {isUserMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-lg bg-white shadow-lg dark:bg-gray-800">
+                <div className="bg-popover absolute right-0 mt-2 w-48 rounded-lg shadow-lg">
                   <Link
                     onClick={() => setIsUserMenuOpen(false)}
                     to="/profile"
-                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+                    className="text-foreground hover:bg-secondary/50 block px-4 py-2"
                   >
                     Profile
                   </Link>
                   <Link
                     onClick={() => setIsUserMenuOpen(false)}
                     to="/settings"
-                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+                    className="text-foreground hover:bg-secondary/50 block px-4 py-2"
                   >
                     Settings
                   </Link>
                   <button
                     onClick={logout}
-                    className="block w-full px-4 py-2 text-left text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-700"
+                    className="text-destructive hover:bg-destructive/20 block w-full px-4 py-2 text-left"
                   >
                     <LogOut className="mr-2 inline h-4 w-4" /> Logout
                   </button>
@@ -145,13 +129,13 @@ function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="block text-gray-800 transition-transform duration-300 focus:outline-none md:hidden dark:text-white"
+          className="text-foreground block transition-transform duration-300 focus:outline-none md:hidden"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? (
-            <X className="h-6 w-6 text-gray-800 dark:text-white" />
+            <X className="text-foreground h-6 w-6" />
           ) : (
-            <Menu className="h-6 w-6 text-gray-800 dark:text-white" />
+            <Menu className="text-foreground h-6 w-6" />
           )}
         </button>
       </nav>
@@ -167,35 +151,35 @@ function Navbar() {
           <div className="space-y-2 px-2 pt-2 pb-3">
             <NavLink
               to="/"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 transition-all duration-300 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="text-foreground hover:bg-secondary block rounded-md px-3 py-2 text-base font-medium transition-all duration-300"
               onClick={handleLinkClick}
             >
               Home
             </NavLink>
             <NavLink
               to="/about"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 transition-all duration-300 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="text-foreground hover:bg-secondary block rounded-md px-3 py-2 text-base font-medium transition-all duration-300"
               onClick={handleLinkClick}
             >
               About
             </NavLink>
             <NavLink
               to="/services"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 transition-all duration-300 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="text-foreground hover:bg-secondary block rounded-md px-3 py-2 text-base font-medium transition-all duration-300"
               onClick={handleLinkClick}
             >
               Services
             </NavLink>
             <Link
               to="/login"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 transition-all duration-300 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="text-foreground hover:bg-secondary block rounded-md px-3 py-2 text-base font-medium transition-all duration-300"
               onClick={handleLinkClick}
             >
               Login
             </Link>
             <Link
               to="/signup"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 transition-all duration-300 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="text-foreground hover:bg-secondary block rounded-md px-3 py-2 text-base font-medium transition-all duration-300"
               onClick={handleLinkClick}
             >
               Sign Up

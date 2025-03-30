@@ -1,17 +1,10 @@
-// const LoginPage = () => {
-//   return (
-//     <div>LoginPage</div>
-//   )
-// }
-
-// export default LoginPage
-
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button' // Assuming shadcn component
 import { Link } from 'react-router'
+import Logo from '@/components/common/Logo'
 
 // Define Zod schema for validation
 const loginSchema = z.object({
@@ -43,38 +36,35 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <div className="flex grow items-center justify-center bg-white dark:bg-gray-900">
-      <div className="w-full max-w-md rounded-lg bg-gray-100 p-8 shadow-md dark:bg-gray-800">
-        <h2 className="mb-6 text-center text-3xl font-bold text-gray-900 dark:text-white">
-          Login to Your Account
+    <div className="bg-background flex grow items-center justify-center">
+      <div className="bg-card w-full max-w-md rounded-lg p-8 shadow-md">
+        <h2 className="text-foreground mb-6 text-center text-3xl font-bold">
+          Login to{' '}
+          <span className="text-primary">
+            <Logo />
+          </span>
         </h2>
 
         {/* Toggle Button to switch between "Login with Email" and "Login with Username" */}
         <div className="mb-6 text-center">
           <Button
-            className={`rounded-full px-4 py-2 ${
-              useUsername ? 'bg-blue-600 text-white' : 'bg-white text-blue-600'
-            }`}
+            className={`rounded-full px-4 py-2 bg-primary text-primary-foreground`}
             onClick={() => setUseUsername(!useUsername)}
           >
-            {useUsername
-              ? 'Login with Email'
-              : 'Login with Username'}
+            {useUsername ? 'Login with Email' : 'Login with Username'}
           </Button>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Username or Email Field (Dynamic Placeholder) */}
           <div>
-            <label className="mb-2 block text-gray-700 dark:text-gray-300">
+            <label className="text-foreground mb-2 block">
               {useUsername ? 'Username' : 'Email'}
             </label>
             <input
               {...register('identifier')}
-              className={`w-full rounded-lg border bg-white px-4 py-2 dark:bg-gray-700 ${
-                errors.identifier
-                  ? 'border-red-500'
-                  : 'border-gray-300 dark:border-gray-600'
+              className={`bg-background w-full rounded-lg border px-4 py-2 ${
+                errors.identifier ? 'border-destructive' : 'border-border'
               }`}
               type={useUsername ? 'text' : 'email'}
               placeholder={
@@ -82,7 +72,7 @@ const LoginPage: React.FC = () => {
               }
             />
             {errors.identifier && (
-              <p className="text-sm text-red-500">
+              <p className="text-destructive text-sm">
                 {errors.identifier.message}
               </p>
             )}
@@ -90,37 +80,35 @@ const LoginPage: React.FC = () => {
 
           {/* Password Field */}
           <div>
-            <label className="mb-2 block text-gray-700 dark:text-gray-300">
-              Password
-            </label>
+            <label className="text-foreground mb-2 block">Password</label>
             <input
               {...register('password')}
-              className={`w-full rounded-lg border bg-white px-4 py-2 dark:bg-gray-700 ${
-                errors.password
-                  ? 'border-red-500'
-                  : 'border-gray-300 dark:border-gray-600'
+              className={`bg-background w-full rounded-lg border px-4 py-2 ${
+                errors.password ? 'border-destructive' : 'border-border'
               }`}
               type="password"
               placeholder="Enter your password"
             />
             {errors.password && (
-              <p className="text-sm text-red-500">{errors.password.message}</p>
+              <p className="text-destructive text-sm">
+                {errors.password.message}
+              </p>
             )}
           </div>
 
           {/* Login Button */}
           <Button
             type="submit"
-            className="w-full bg-blue-600 py-3 text-white hover:bg-blue-700"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 w-full py-3"
           >
             Log In 🚀
           </Button>
         </form>
 
         {/* Footer Text */}
-        <p className="mt-4 text-center text-gray-600 dark:text-gray-400">
+        <p className="text-muted-foreground mt-4 text-center">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-blue-600 hover:underline">
+          <Link to="/signup" className="text-primary hover:underline">
             Sign up here
           </Link>
         </p>

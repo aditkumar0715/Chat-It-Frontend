@@ -1,16 +1,17 @@
 import React from 'react'
 import { Github, Linkedin, Coffee, Twitter } from 'lucide-react'
+import Logo from './Logo'
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-100 py-8 text-gray-600 dark:bg-gray-900 dark:text-gray-300">
+    <footer className="bg-background text-foreground py-8">
       <div className="container mx-auto px-4">
         {/* Main Footer Content */}
         <div className="flex flex-col items-center justify-between md:flex-row">
           {/* Brand and Copyright */}
           <div className="mb-6 md:mb-0">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              CHAT-IT
+            <h1 className="text-foreground text-2xl font-bold">
+              <Logo />
             </h1>
             <p className="mt-2 text-sm">
               Built with ❤️ for secure and ad-free communication.
@@ -23,7 +24,7 @@ const Footer: React.FC = () => {
               href="https://github.com/aditkumar0715"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-blue-600 dark:hover:text-blue-400"
+              className="hover:text-primary"
               aria-label="GitHub"
             >
               <Github className="h-6 w-6" />
@@ -33,7 +34,7 @@ const Footer: React.FC = () => {
               href="https://linkedin.com/in/aditkumar0715"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-blue-600 dark:hover:text-blue-400"
+              className="hover:text-primary"
               aria-label="LinkedIn"
             >
               <Linkedin className="h-6 w-6" />
@@ -43,7 +44,7 @@ const Footer: React.FC = () => {
               href="https://www.buymeacoffee.com/aditkumar0715"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-yellow-600 dark:hover:text-yellow-500"
+              className="hover:text-accent"
               aria-label="Buy Me A Coffee"
             >
               <Coffee className="h-6 w-6" />
@@ -53,7 +54,7 @@ const Footer: React.FC = () => {
               href="https://twitter.com/aditkumar0715"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-blue-400 dark:hover:text-blue-500"
+              className="hover:text-primary"
               aria-label="Twitter"
             >
               <Twitter className="h-6 w-6" />
@@ -62,18 +63,20 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Divider Line */}
-        <hr className="my-6 border-gray-300 dark:border-gray-700" />
+        <hr className="border-border my-6" />
 
         {/* Bottom Footer */}
         <div className="text-center text-sm">
-          <p>© {new Date().getFullYear()} CHAT-IT. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} <Logo />. All rights reserved.
+          </p>
           <p>
             Made by{' '}
             <a
               href="https://github.com/aditkumar0715"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline hover:text-blue-600 dark:hover:text-blue-400"
+              className="hover:text-primary underline"
             >
               Aditya Kumar (Giri)
             </a>
