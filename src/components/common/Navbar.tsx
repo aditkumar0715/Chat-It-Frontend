@@ -85,6 +85,11 @@ function Navbar() {
                   Sign Up
                 </Button>
               </Link>
+              <Link to="/chat">
+                <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+                  Try Chat-It
+                </Button>
+              </Link>
             </>
           ) : (
             // Render Profile Avatar and Dropdown Menu when user is logged in
@@ -94,7 +99,7 @@ function Navbar() {
                 className="text-foreground flex items-center space-x-2"
               >
                 <UserCircle className="h-6 w-6" />
-                <span>{user?.username} hello</span>
+                <span>{user && 'hello'}</span>
               </button>
               {isUserMenuOpen && (
                 <div className="bg-popover absolute right-0 mt-2 w-48 rounded-lg shadow-lg">
@@ -183,6 +188,13 @@ function Navbar() {
               onClick={handleLinkClick}
             >
               Sign Up
+            </Link>
+            <Link
+              to="/chat"
+              className="text-foreground hover:bg-secondary block rounded-md px-3 py-2 text-base font-medium transition-all duration-300"
+              onClick={handleLinkClick}
+            >
+              Try Chat-It
             </Link>
           </div>
         </div>

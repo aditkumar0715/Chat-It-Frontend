@@ -1,13 +1,11 @@
-
+import { Link } from 'react-router'
 import { MessageSquare, PlusCircle } from 'lucide-react'
 
 const EmptyChat = () => {
   return (
-    <div
-      className="flex h-full flex-col items-center justify-center p-6 bg-background"
-    >
+    <div className="bg-background flex h-full flex-col items-center justify-center p-6">
       <div className="flex flex-col items-center space-y-4">
-        <MessageSquare size={64} className='text-primary' />
+        <MessageSquare size={64} className="text-primary" />
         <h1
           className="text-4xl font-bold"
           style={{ color: 'var(--color-foreground)' }}
@@ -32,10 +30,11 @@ const EmptyChat = () => {
         <PlusCircle size={20} />
         <span className="font-semibold">New Chat</span>
       </button>
+      <Link to="/">
+        Go Home
+      </Link>
     </div>
   )
 }
-
-
 
 export default EmptyChat

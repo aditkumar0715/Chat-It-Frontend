@@ -1,7 +1,7 @@
-import React from 'react'
 import ChatHeader from '@/components/chat/ChatHeader'
 import ChatMessages from '@/components/chat/ChatMessages'
 import ChatForm from '@/components/chat/ChatForm'
+import { useParams } from 'react-router'
 
 const messages = [
   { id: 1, text: 'Hi there!', from: 'other' },
@@ -22,10 +22,11 @@ const messages = [
 ]
 
 const UserChats = () => {
+const { id } = useParams<string>()
   return (
     <>
       {/* Chat Header */}
-      <ChatHeader />
+      <ChatHeader id={id} />
 
       {/* Chat Messages */}
       <ChatMessages messages={messages} />

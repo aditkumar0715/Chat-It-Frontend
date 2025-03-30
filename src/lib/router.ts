@@ -5,9 +5,9 @@ import SignupPage from '@/pages/SignupPage'
 import NotFoundPage from '@/pages/NotFoundPage'
 import HomePage from '@/pages/HomePage'
 import Services from '@/components/UpdateProfile'
-import ChatHome from '@/pages/ChatHome'
 import UserChats from '@/pages/UserChats'
 import EmptyChat from '@/components/chat/EmptyChat'
+import ChatPage from '@/pages/ChatPage'
 
 const router = createBrowserRouter([
   {
@@ -38,11 +38,11 @@ const router = createBrowserRouter([
   },
   {
     path: 'chat',
-    Component: ChatHome,
+    Component: ChatPage,
     children: [
       {
         index: true,
-        Component:EmptyChat,
+        Component: EmptyChat,
       },
       {
         path: ':id',

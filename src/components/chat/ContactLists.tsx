@@ -1,3 +1,4 @@
+import { Link } from "react-router"
 
 const ContactLists = (
   {contacts}:{contacts: {
@@ -8,13 +9,10 @@ const ContactLists = (
   }[]}
 ) => {
   return (
-    
-      <div className="flex-1 overflow-y-auto h-full">
-        {contacts.map((contact) => (
-          <div
-            key={contact.id}
-            className="flex cursor-pointer items-center border-b border-gray-100 p-4 hover:bg-gray-50 dark:hover:bg-gray-800"
-          >
+    <div className="h-full flex-1 overflow-y-auto">
+      {contacts.map((contact) => (
+        <Link key={contact.id} to={`/chat/${contact.id}`}>
+          <div className="flex cursor-pointer items-center border-b border-gray-100 p-4 hover:bg-gray-50 dark:hover:bg-gray-800">
             <img
               src={contact.image}
               alt={contact.name}
@@ -29,8 +27,9 @@ const ContactLists = (
               </p>
             </div>
           </div>
-        ))}
-      </div>
+        </Link>
+      ))}
+    </div>
   )
 }
 

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 
 import ContactLists from '@/components/chat/ContactLists'
-import SearchFilter from './SearchFilter'
+import SearchFilter from '@/components/chat/SearchFilter'
 import { Outlet } from 'react-router'
 
 const contacts = [
@@ -92,15 +92,16 @@ const contacts = [
   // add more contacts as needed
 ]
 
-const ChatHome = () => {
+const ChatPage
+ = () => {
   const [leftWidth, setLeftWidth] = useState(300) // default left panel width in px
   const [isDragging, setIsDragging] = useState(false)
-  const containerRef = useRef(null)
-  const dragRef = useRef(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const dragRef = useRef<HTMLDivElement>(null)
 
   // Handle dragging for resizing
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: { clientX: number }) => {
       if (!isDragging || !containerRef.current) return
       const containerLeft = containerRef.current.getBoundingClientRect().left
       let newWidth = e.clientX - containerLeft
@@ -152,4 +153,5 @@ const ChatHome = () => {
   )
 }
 
-export default ChatHome
+export default ChatPage
+
