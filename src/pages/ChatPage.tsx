@@ -1,8 +1,11 @@
-import { useState, useRef, useEffect } from 'react'
-
-import ContactLists from '@/components/chat/ContactLists'
-import SearchFilter from '@/components/chat/SearchFilter'
-import { Outlet } from 'react-router'
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import ContactLists from '@/components/chat/ContactLists';
+import SearchFilter from '@/components/chat/SearchFilter';
+import { Outlet } from 'react-router';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/lib/redux/store';
+import { toast } from 'react-toastify';
 
 const contacts = [
   {
@@ -90,45 +93,56 @@ const contacts = [
     preview: 'I have sent the documents.',
   },
   // add more contacts as needed
-]
+];
 
-const ChatPage
- = () => {
-  const [leftWidth, setLeftWidth] = useState(300) // default left panel width in px
-  const [isDragging, setIsDragging] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const dragRef = useRef<HTMLDivElement>(null)
+const ChatPage = () => {
+  const [leftWidth, setLeftWidth] = useState(300); // default left panel width in px
+  const [isDragging, setIsDragging] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   // Handle dragging for resizing
   useEffect(() => {
     const handleMouseMove = (e: { clientX: number }) => {
-      if (!isDragging || !containerRef.current) return
-      const containerLeft = containerRef.current.getBoundingClientRect().left
-      let newWidth = e.clientX - containerLeft
+      if (!isDragging || !containerRef.current) return;
+      const containerLeft = containerRef.current.getBoundingClientRect().left;
+      let newWidth = e.clientX - containerLeft;
       // set some min and max width boundaries
-      const minWidth = 180
-      const maxWidth = 500
-      if (newWidth < minWidth) newWidth = minWidth
-      if (newWidth > maxWidth) newWidth = maxWidth
-      setLeftWidth(newWidth)
-    }
+      const minWidth = 180;
+      const maxWidth = 500;
+      if (newWidth < minWidth) newWidth = minWidth;
+      if (newWidth > maxWidth) newWidth = maxWidth;
+      setLeftWidth(newWidth);
+    };
 
-    const handleMouseUp = () => setIsDragging(false)
+    const handleMouseUp = () => setIsDragging(false);
 
     if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove)
-      document.addEventListener('mouseup', handleMouseUp)
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
     }
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('mouseup', handleMouseUp)
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging]);
+
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      toast.error('Please login to access the chat page.', {});
+      navigate('/login');
     }
-  }, [isDragging])
+  }, []);
 
   return (
     <div
       ref={containerRef}
-      className="mx-auto flex max-h-screen max-w-[2000px]"
+      className="mx-auto flex max-h-screen w-full max-w-[2000px]"
     >
       {/* Left Sidebar */}
       <div style={{ width: leftWidth }}>
@@ -150,8 +164,7 @@ const ChatPage
         <Outlet />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChatPage
-
+export default ChatPage;

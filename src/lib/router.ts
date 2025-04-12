@@ -1,13 +1,14 @@
-import { createBrowserRouter } from 'react-router'
-import App from '@/App'
-import LoginPage from '@/pages/LoginPage'
-import SignupPage from '@/pages/SignupPage'
-import NotFoundPage from '@/pages/NotFoundPage'
-import HomePage from '@/pages/HomePage'
-import Services from '@/components/UpdateProfile'
-import UserChats from '@/pages/UserChats'
-import EmptyChat from '@/components/chat/EmptyChat'
-import ChatPage from '@/pages/ChatPage'
+import { createBrowserRouter } from 'react-router';
+import App from '@/App';
+import LoginPage from '@/pages/LoginPage';
+import SignupPage from '@/pages/SignupPage';
+import NotFoundPage from '@/pages/NotFoundPage';
+import HomePage from '@/pages/HomePage';
+import UpdateProfile from '@/components/UpdateProfile';
+import UserChats from '@/pages/UserChats';
+import EmptyChat from '@/components/chat/EmptyChat';
+import ChatPage from '@/pages/ChatPage';
+import MyDetailsPage from '@/pages/MyDetailsPage';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,26 @@ const router = createBrowserRouter([
       },
       {
         path: 'services',
-        Component: Services,
+        Component: UpdateProfile,
+      },
+      {
+        path: 'me',
+        Component: MyDetailsPage,
+      },
+      {
+        path: 'chat',
+        Component: ChatPage,
+        children: [
+          {
+            index: true,
+            Component: EmptyChat,
+          },
+          {
+            path: ':id',
+            Component: UserChats,
+          },
+          { path: '*', Component: NotFoundPage },
+        ],
       },
       {
         path: '*',
@@ -36,21 +56,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: 'chat',
-    Component: ChatPage,
-    children: [
-      {
-        index: true,
-        Component: EmptyChat,
-      },
-      {
-        path: ':id',
-        Component: UserChats,
-      },
-      { path: '*', Component: NotFoundPage },
-    ],
-  },
-])
+]);
 
-export default router
+export default router;

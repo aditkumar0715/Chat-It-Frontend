@@ -1,39 +1,44 @@
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '@/components/ui/button' // Assuming shadcn component
-import { Link } from 'react-router'
-import Logo from '@/components/common/Logo'
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button'; // Assuming shadcn component
+import { Link } from 'react-router';
+import Logo from '@/components/common/Logo';
+import { loginUser } from '@/lib/axios/services'; // Importing the login function
+import { ILoginInputs } from '@/types/types'; // Importing the ILoginInputs type
+import { loginSchema } from '@/lib/zod';
+import { useDispatch } from 'react-redux';
+import { login } from '@/lib/redux/authSlice'; // Importing the login action
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
-// Define Zod schema for validation
-const loginSchema = z.object({
-  identifier: z
-    .string()
-    .nonempty({ message: 'This field is required.' })
-    .refine((val) => val.includes('@') || /^[a-zA-Z0-9_.-]+$/.test(val), {
-      message: 'Must be a valid username or email.',
-    }),
-  password: z.string().min(6, 'Password must be at least 6 characters long.'),
-})
 
-type LoginFormInputs = z.infer<typeof loginSchema>
 
 const LoginPage: React.FC = () => {
-  const [useUsername, setUseUsername] = useState(true) // Toggle between Username and Email
+  const [useUsername, setUseUsername] = useState(false); // Toggle between Username and Email
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormInputs>({
+  } = useForm<ILoginInputs>({
     resolver: zodResolver(loginSchema),
-  })
+  });
 
-  const onSubmit = (data: LoginFormInputs) => {
-    console.log('Login Data Submitted:', data)
-    alert('Login Successful!')
-  }
+  const onSubmit = async (data: ILoginInputs) => {
+    const response = await loginUser(data);
+    if (response.success !== true) {
+      toast.error(response.message); // Display error message using toast
+      return;
+    }
+    dispatch(login(response)); // Dispatching the login action with user data
+    console.log(response);
+    toast.success('Login successful!'); // Display success message using toast
+    // Redirect to the dashboard or home page after successful login
+    navigate("/chat");
+  };
 
   return (
     <div className="bg-background flex grow items-center justify-center">
@@ -48,7 +53,7 @@ const LoginPage: React.FC = () => {
         {/* Toggle Button to switch between "Login with Email" and "Login with Username" */}
         <div className="mb-6 text-center">
           <Button
-            className={`rounded-full px-4 py-2 bg-primary text-primary-foreground`}
+            className={`bg-primary text-primary-foreground rounded-full px-4 py-2`}
             onClick={() => setUseUsername(!useUsername)}
           >
             {useUsername ? 'Login with Email' : 'Login with Username'}
@@ -62,19 +67,17 @@ const LoginPage: React.FC = () => {
               {useUsername ? 'Username' : 'Email'}
             </label>
             <input
-              {...register('identifier')}
+              {...register('email')}
               className={`bg-background w-full rounded-lg border px-4 py-2 ${
-                errors.identifier ? 'border-destructive' : 'border-border'
+                errors.email ? 'border-destructive' : 'border-border'
               }`}
               type={useUsername ? 'text' : 'email'}
               placeholder={
                 useUsername ? 'Enter your username' : 'Enter your email'
               }
             />
-            {errors.identifier && (
-              <p className="text-destructive text-sm">
-                {errors.identifier.message}
-              </p>
+            {errors.email && (
+              <p className="text-destructive text-sm">{errors.email.message}</p>
             )}
           </div>
 
@@ -114,7 +117,7 @@ const LoginPage: React.FC = () => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

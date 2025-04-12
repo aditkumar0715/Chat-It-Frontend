@@ -20,7 +20,7 @@ const Home: React.FC = () => {
             Secure, encrypted, and ad-free messaging. Stay connected without
             compromising your privacy.
           </p>
-          <Link to="/signup">
+          <Link to="/login">
             <button className="bg-primary text-primary-foreground hover:bg-primary/90 mt-4 rounded-lg px-8 py-4 text-lg font-medium">
               Start Chatting Now 🚀
             </button>
@@ -103,6 +103,7 @@ const Home: React.FC = () => {
           </Link>
         </section>
       </main>
+      {/* Footer */}
       <Footer />
     </>
   )

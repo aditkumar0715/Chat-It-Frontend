@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
               href="https://www.buymeacoffee.com/aditkumar0715"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-accent"
+              className="hover:text-primary"
               aria-label="Buy Me A Coffee"
             >
               <Coffee className="h-6 w-6" />

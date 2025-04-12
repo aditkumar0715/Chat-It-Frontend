@@ -1,48 +1,37 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '@/components/ui/button' // Assuming shadcn Button component
-import { Link } from 'react-router'
-import Logo from '@/components/common/Logo'
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button'; // Assuming shadcn Button component
+import { Link, useNavigate } from 'react-router';
+import Logo from '@/components/common/Logo';
+import { signupSchema } from '@/lib/zod';
+import { ISignupInputs } from '@/types/types';
+import { toast } from 'react-toastify';
+import { signupUser } from '@/lib/axios/services';
 
-// Define Zod Schema
-const signupSchema = z
-  .object({
-    name: z.string().min(2, 'Name must be at least 2 characters.'),
-    email: z.string().email('Please enter a valid email.'),
-    username: z.string().min(3, 'Username must be at least 3 characters.'),
-    age: z
-      .number()
-      .min(13, 'You must be at least 13 years old.')
-      .max(100, 'Age must be realistic!'),
-    password: z
-      .string()
-      .min(6, 'Password must be at least 6 characters.')
-      .max(20, 'Password must be less than 20 characters.'),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords must match.',
-    path: ['confirmPassword'],
-  })
-
-// Define form input type based on schema
-type SignupFormInputs = z.infer<typeof signupSchema>
 
 const SignupPage: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignupFormInputs>({
+  } = useForm<ISignupInputs>({
     resolver: zodResolver(signupSchema),
-  })
+  });
+  const navigate = useNavigate(); // Hook to programmatically navigate
 
-  const onSubmit = (data: SignupFormInputs) => {
-    console.log('Form submitted:', data)
-    alert('Signup successful!')
-  }
+  const onSubmit = async (data: ISignupInputs) => {
+    // console.log('Form submitted:', data);
+
+    // Call the signup API with the form data
+    const response = await signupUser(data);
+    // console.log('Signup response:', response);
+    if (response.success) {
+      toast.success(response.message); // Display success message using toast
+      navigate('/login'); // Redirect to the login page after successful signup
+    }
+    toast.error(response.error); // Display error message using toast
+  };
 
   return (
     <div className="bg-background flex grow items-center justify-center">
@@ -106,22 +95,6 @@ const SignupPage: React.FC = () => {
             )}
           </div>
 
-          {/* Age */}
-          <div>
-            <label className="text-foreground mb-2 block">Age</label>
-            <input
-              {...register('age', { valueAsNumber: true })}
-              className={`bg-background w-full rounded-lg border px-4 py-2 ${
-                errors.age ? 'border-destructive' : 'border-border'
-              }`}
-              type="number"
-              placeholder="Enter your age"
-            />
-            {errors.age && (
-              <p className="text-destructive text-sm">{errors.age.message}</p>
-            )}
-          </div>
-
           {/* Password */}
           <div>
             <label className="text-foreground mb-2 block">Password</label>
@@ -177,7 +150,7 @@ const SignupPage: React.FC = () => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignupPage
+export default SignupPage;
