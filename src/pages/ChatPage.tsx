@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useMatch, useNavigate } from 'react-router';
 import ContactLists from '@/components/chat/ContactLists';
 import SearchFilter from '@/components/chat/SearchFilter';
 import { Outlet } from 'react-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/lib/redux/store';
 import { toast } from 'react-toastify';
+import { useMediaQuery } from '@/hooks/customHooks';
 
 const contacts = [
   {
@@ -101,6 +102,8 @@ const ChatPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const isChats = useMatch('/chat/:id');
+  const isSmUp = useMediaQuery('(min-width: 640px)');
 
   // Handle dragging for resizing
   useEffect(() => {
@@ -142,27 +145,43 @@ const ChatPage = () => {
   return (
     <div
       ref={containerRef}
-      className="mx-auto flex max-h-screen w-full max-w-[2000px]"
+      className="mx-auto flex max-h-[calc(100vh-4rem)] w-full max-w-[2000px] flex-1 overflow-hidden"
     >
-      {/* Left Sidebar */}
-      <div style={{ width: leftWidth }}>
-        <div className="flex h-full flex-col border-r border-gray-200 dark:border-gray-700">
-          <SearchFilter />
-          <ContactLists contacts={contacts} />
-        </div>
-      </div>
+{/*
+On mobile:
+/chat → only contacts (100% width)
+/chat/:id → only messages (100% width)
 
-      {/* Draggable Separator */}
-      <div
-        ref={dragRef}
-        onMouseDown={() => setIsDragging(true)}
-        className="w-1 cursor-col-resize bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
-      />
+On desktop (sm+):
+Both panels show with a draggable separator
+Left panel uses leftWidth
+*/}
+
+      {/* Left Sidebar */}
+      {(isSmUp || !isChats) && (
+        <div style={{ width: isSmUp ? leftWidth : '100%' }}>
+          <div className="border-sidebar-border flex h-full flex-col border-r">
+            <SearchFilter />
+            <ContactLists contacts={contacts} />
+          </div>
+        </div>
+      )}
+
+      {/* Draggable Separator - show only if sm+ and chat is selected */}
+      {isSmUp && isChats && (
+        <div
+          className="bg-secondary w-1 cursor-col-resize hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+          ref={dragRef}
+          onMouseDown={() => setIsDragging(true)}
+        />
+      )}
 
       {/* Right Chat Section */}
-      <div className="flex flex-1 flex-col">
-        <Outlet />
-      </div>
+      {(isSmUp || isChats) && (
+        <div className="flex flex-1 flex-col">
+          <Outlet />
+        </div>
+      )}
     </div>
   );
 };

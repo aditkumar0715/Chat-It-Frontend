@@ -24,7 +24,7 @@ const messages = [
 const UserChats = () => {
 const { id } = useParams<string>()
   return (
-    <>
+    <div className="flex flex-col h-full w-full">
       {/* Chat Header */}
       <ChatHeader id={id} />
 
@@ -33,7 +33,7 @@ const { id } = useParams<string>()
 
       {/* Chat Form */}
       <ChatForm />
-    </>
+    </div>
   )
 }
 

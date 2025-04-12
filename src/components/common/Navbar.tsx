@@ -35,8 +35,8 @@ function Navbar() {
   };
 
   return (
-    <header className="bg-background border-b transition-colors duration-300 select-none">
-      <nav className="mx-auto flex max-w-[2000px] items-center justify-between p-4">
+    <header className="bg-background max-h-[4rem] border-b transition-colors duration-300 select-none">
+      <nav className="mx-auto flex max-w-[2000px] items-center justify-between p-3">
         {/* Logo */}
         <Link
           to="/"
@@ -174,7 +174,7 @@ function Navbar() {
       {menuOpen && (
         <div
           className={cn(
-            'transition-all duration-500 ease-in-out md:hidden',
+            'relative z-10 border-b-2 bg-popover transition-all duration-500 ease-in-out md:hidden',
             menuOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
           )}
         >

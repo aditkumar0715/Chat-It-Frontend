@@ -1,15 +1,19 @@
+import { Button } from "../ui/button"
+import {UserPlus} from "lucide-react"
 
 const data = ['All', 'Groups', 'Personal']
 
 const SearchFilter = () => {
+  
   return (
     <div className="flex flex-col">
-      <div className="border-b border-gray-200 p-4 dark:border-gray-700">
+      <div className="flex items-center gap-3 border-b border-gray-200 p-4 dark:border-gray-700">
         <input
           type="text"
           placeholder="Search contacts..."
           className="focus:border-primary w-full rounded-md border border-gray-300 p-2 focus:ring focus:outline-none"
         />
+        <Button variant="default"><UserPlus/> New</Button>
       </div>
       <div className="flex flex-wrap gap-2 p-2">
         {data.map((item, index) => (

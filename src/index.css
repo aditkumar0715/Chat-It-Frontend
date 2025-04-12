@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -47,7 +47,7 @@
   --popover-foreground: oklch(0.985 0.002 247.839);
   --primary: oklch(0.666 0.179 58.318);
   --primary-foreground: oklch(0.21 0.034 264.665);
-  --secondary: oklch(0.30 0.04 262);
+  --secondary: oklch(0.3 0.04 262);
   --secondary-foreground: oklch(0.985 0.002 247.839);
   --muted: oklch(0.278 0.033 256.848);
   --muted-foreground: oklch(0.707 0.022 261.325);
@@ -113,6 +113,15 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    /* Hide scrollbar for IE, Edge and Firefox */
+    /* IE and Edge */
+    /* -ms-overflow-style: none; */
+    /* Firefox */
+    /* scrollbar-width: none; */
+  }
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  *::-webkit-scrollbar {
+    /* display: none; */
   }
   body {
     @apply bg-background text-foreground;

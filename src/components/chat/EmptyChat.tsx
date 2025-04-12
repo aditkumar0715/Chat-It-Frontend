@@ -1,5 +1,6 @@
-import { Link } from 'react-router'
-import { MessageSquare, PlusCircle } from 'lucide-react'
+import { Link } from 'react-router';
+import { MessageSquare, UserPlus } from 'lucide-react';
+import { Button } from '../ui/button';
 
 const EmptyChat = () => {
   return (
@@ -20,21 +21,12 @@ const EmptyChat = () => {
         Welcome to Chat-It. Select a conversation from the list or start a new
         chat to begin messaging.
       </p>
-      <button
-        className="mt-6 flex items-center space-x-2 rounded-full px-6 py-3 shadow-lg transition-colors duration-200 focus:outline-none"
-        style={{
-          backgroundColor: 'var(--color-primary)',
-          color: 'var(--color-primary-foreground)',
-        }}
-      >
-        <PlusCircle size={20} />
+      <Button size="lg" className="mt-4">
+        <UserPlus />
         <span className="font-semibold">New Chat</span>
-      </button>
-      <Link to="/">
-        Go Home
-      </Link>
+      </Button>
     </div>
-  )
-}
+  );
+};
 
-export default EmptyChat
+export default EmptyChat;
