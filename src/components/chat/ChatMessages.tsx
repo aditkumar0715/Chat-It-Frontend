@@ -1,7 +1,7 @@
 const ChatMessages = ({
   messages,
 }: {
-  messages: { id: number; text: string; from: string }[]
+  messages: { id: number; text: string; from: string }[];
 }) => {
   return (
     <div className="h-full flex-1 space-y-4 overflow-auto bg-gray-50 p-4 dark:bg-gray-900">
@@ -24,7 +24,7 @@ const ChatMessages = ({
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default ChatMessages
+export default ChatMessages;

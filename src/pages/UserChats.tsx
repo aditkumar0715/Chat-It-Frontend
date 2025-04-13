@@ -1,7 +1,7 @@
-import ChatHeader from '@/components/chat/ChatHeader'
-import ChatMessages from '@/components/chat/ChatMessages'
-import ChatForm from '@/components/chat/ChatForm'
-import { useParams } from 'react-router'
+import ChatHeader from '@/components/chat/ChatHeader';
+import ChatMessages from '@/components/chat/ChatMessages';
+import ChatForm from '@/components/chat/ChatForm';
+import { useParams } from 'react-router';
 
 const messages = [
   { id: 1, text: 'Hi there!', from: 'other' },
@@ -19,14 +19,14 @@ const messages = [
   { id: 13, text: 'Great to hear!', from: 'self' },
   { id: 14, text: 'Great to hear!', from: 'self' },
   { id: 15, text: 'Great to hear!', from: 'self' },
-]
+];
 
 const UserChats = () => {
-const { id } = useParams<string>()
+  const { id } = useParams<string>();
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex h-full w-full flex-col">
       {/* Chat Header */}
-      <ChatHeader id={id} />
+      <ChatHeader id={id!} />
 
       {/* Chat Messages */}
       <ChatMessages messages={messages} />
@@ -34,7 +34,7 @@ const { id } = useParams<string>()
       {/* Chat Form */}
       <ChatForm />
     </div>
-  )
-}
+  );
+};
 
-export default UserChats
+export default UserChats;

@@ -1,8 +1,8 @@
-import React from 'react'
-import { Link } from 'react-router'
-import { ShieldCheck, MessageSquare, Lock, ThumbsUp } from 'lucide-react'
-import Footer from '@/components/common/Footer'
-import Logo from '@/components/common/Logo'
+import React from 'react';
+import { Link } from 'react-router';
+import { ShieldCheck, MessageSquare, Lock, ThumbsUp } from 'lucide-react';
+import Footer from '@/components/common/Footer';
+import Logo from '@/components/common/Logo';
 
 const Home: React.FC = () => {
   return (
@@ -106,7 +106,7 @@ const Home: React.FC = () => {
       {/* Footer */}
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

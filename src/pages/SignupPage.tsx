@@ -9,7 +9,6 @@ import { ISignupInputs } from '@/types/types';
 import { toast } from 'react-toastify';
 import { signupUser } from '@/lib/axios/services';
 
-
 const SignupPage: React.FC = () => {
   const {
     register,

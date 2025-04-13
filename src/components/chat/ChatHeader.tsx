@@ -2,7 +2,7 @@ import { Info, ChevronLeft } from 'lucide-react';
 import { Link } from 'react-router';
 import { Button } from '../ui/button';
 
-const ChatHeader = ({ id }: { id: string | undefined }) => {
+const ChatHeader = ({ id }: { id: string }) => {
   return (
     <div className="flex items-center border-b border-gray-200 p-4 dark:border-gray-700">
       <Link to="/chat" className="mr-4">

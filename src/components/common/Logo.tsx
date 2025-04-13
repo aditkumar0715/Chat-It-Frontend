@@ -1,6 +1,5 @@
-
 const Logo = () => {
-  return "Chat-It"
-}
+  return 'Chat-It';
+};
 
-export default Logo
+export default Logo;

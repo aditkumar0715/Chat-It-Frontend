@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '@/components/ui/button' // Assuming from shadcn setup
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button'; // Assuming from shadcn setup
 
 const updateProfileSchema = z
   .object({
@@ -19,35 +19,35 @@ const updateProfileSchema = z
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords must match.',
     path: ['confirmPassword'],
-  })
+  });
 
-type UpdateProfileInputs = z.infer<typeof updateProfileSchema>
+type UpdateProfileInputs = z.infer<typeof updateProfileSchema>;
 
 const UpdateProfile: React.FC = () => {
-  const [previewImage, setPreviewImage] = useState<string | null>(null)
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<UpdateProfileInputs>({
     resolver: zodResolver(updateProfileSchema),
-  })
+  });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      setPreviewImage(URL.createObjectURL(file))
+      setPreviewImage(URL.createObjectURL(file));
     }
-  }
+  };
 
   const removeImage = () => {
-    setPreviewImage(null)
-  }
+    setPreviewImage(null);
+  };
 
   const onSubmit = (data: UpdateProfileInputs) => {
-    console.log('Form submitted:', data)
-    alert('Profile updated successfully!')
-  }
+    console.log('Form submitted:', data);
+    alert('Profile updated successfully!');
+  };
 
   return (
     <div className="bg-background flex grow items-center justify-center">
@@ -263,7 +263,7 @@ const UpdateProfile: React.FC = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UpdateProfile
+export default UpdateProfile;

@@ -1,4 +1,4 @@
-import { Send } from 'lucide-react'
+import { Send } from 'lucide-react';
 
 const ChatForm = () => {
   return (
@@ -15,7 +15,7 @@ const ChatForm = () => {
         <Send size={18} />
       </button>
     </form>
-  )
-}
+  );
+};
 
-export default ChatForm
+export default ChatForm;

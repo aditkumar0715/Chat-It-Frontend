@@ -1,100 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
 import { useMatch, useNavigate } from 'react-router';
-import ContactLists from '@/components/chat/ContactLists';
 import SearchFilter from '@/components/chat/SearchFilter';
 import { Outlet } from 'react-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/lib/redux/store';
 import { toast } from 'react-toastify';
 import { useMediaQuery } from '@/hooks/customHooks';
-
-const contacts = [
-  {
-    id: 1,
-    name: 'Alice Johnson',
-    image:
-      'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=facearea&facepad=2&w=64&h=64&q=80',
-    preview: 'Hey, are we still meeting tomorrow?',
-  },
-  {
-    id: 2,
-    name: 'Bob Smith',
-    image:
-      'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=facearea&facepad=2&w=64&h=64&q=80',
-    preview: 'I have sent the documents.',
-  },
-  {
-    id: 3,
-    name: 'Alice Johnson',
-    image:
-      'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=facearea&facepad=2&w=64&h=64&q=80',
-    preview: 'Hey, are we still meeting tomorrow?',
-  },
-  {
-    id: 4,
-    name: 'Bob Smith',
-    image:
-      'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=facearea&facepad=2&w=64&h=64&q=80',
-    preview: 'I have sent the documents.',
-  },
-  {
-    id: 5,
-    name: 'Alice Johnson',
-    image:
-      'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=facearea&facepad=2&w=64&h=64&q=80',
-    preview: 'Hey, are we still meeting tomorrow?',
-  },
-  {
-    id: 6,
-    name: 'Bob Smith',
-    image:
-      'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=facearea&facepad=2&w=64&h=64&q=80',
-    preview: 'I have sent the documents.',
-  },
-  {
-    id: 7,
-    name: 'Alice Johnson',
-    image:
-      'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=facearea&facepad=2&w=64&h=64&q=80',
-    preview: 'Hey, are we still meeting tomorrow?',
-  },
-  {
-    id: 8,
-    name: 'Bob Smith',
-    image:
-      'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=facearea&facepad=2&w=64&h=64&q=80',
-    preview: 'I have sent the documents.',
-  },
-  {
-    id: 9,
-    name: 'Alice Johnson',
-    image:
-      'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=facearea&facepad=2&w=64&h=64&q=80',
-    preview: 'Hey, are we still meeting tomorrow?',
-  },
-  {
-    id: 10,
-    name: 'Bob Smith',
-    image:
-      'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=facearea&facepad=2&w=64&h=64&q=80',
-    preview: 'I have sent the documents.',
-  },
-  {
-    id: 11,
-    name: 'Alice Johnson',
-    image:
-      'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=facearea&facepad=2&w=64&h=64&q=80',
-    preview: 'Hey, are we still meeting tomorrow?',
-  },
-  {
-    id: 12,
-    name: 'Bob Smith',
-    image:
-      'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=facearea&facepad=2&w=64&h=64&q=80',
-    preview: 'I have sent the documents.',
-  },
-  // add more contacts as needed
-];
+import { getMyFriends } from '@/lib/axios/services';
+import { IFriend } from '@/types/types';
+import FriendsList from '@/components/chat/FriendsList';
 
 const ChatPage = () => {
   const [leftWidth, setLeftWidth] = useState(300); // default left panel width in px
@@ -104,6 +18,7 @@ const ChatPage = () => {
   const navigate = useNavigate();
   const isChats = useMatch('/chat/:id');
   const isSmUp = useMediaQuery('(min-width: 640px)');
+  const [friends, setFriends] = useState([] as IFriend[]); //
 
   // Handle dragging for resizing
   useEffect(() => {
@@ -135,11 +50,20 @@ const ChatPage = () => {
     (state: RootState) => state.auth.isAuthenticated
   );
 
+  const fetchFriends = async () => {
+    const response = await getMyFriends();
+    if (response.success) {
+      setFriends(response.data);
+    }
+    console.log('Fetched friends:', response.data);
+  };
+
   useEffect(() => {
     if (!isAuthenticated) {
       toast.error('Please login to access the chat page.', {});
       navigate('/login');
     }
+    fetchFriends();
   }, []);
 
   return (
@@ -147,7 +71,7 @@ const ChatPage = () => {
       ref={containerRef}
       className="mx-auto flex max-h-[calc(100vh-4rem)] w-full max-w-[2000px] flex-1 overflow-hidden"
     >
-{/*
+      {/*
 On mobile:
 /chat → only contacts (100% width)
 /chat/:id → only messages (100% width)
@@ -162,13 +86,13 @@ Left panel uses leftWidth
         <div style={{ width: isSmUp ? leftWidth : '100%' }}>
           <div className="border-sidebar-border flex h-full flex-col border-r">
             <SearchFilter />
-            <ContactLists contacts={contacts} />
+            <FriendsList friends={friends} />
           </div>
         </div>
       )}
 
-      {/* Draggable Separator - show only if sm+ and chat is selected */}
-      {isSmUp && isChats && (
+      {/* Draggable Separator - show only if sm+ */}
+      {isSmUp && (
         <div
           className="bg-secondary w-1 cursor-col-resize hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
           ref={dragRef}

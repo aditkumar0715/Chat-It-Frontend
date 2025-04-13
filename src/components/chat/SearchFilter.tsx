@@ -1,10 +1,13 @@
-import { Button } from "../ui/button"
-import {UserPlus} from "lucide-react"
+import { Button } from '../ui/button';
+import { UserPlus } from 'lucide-react';
+import { useState } from 'react';
+import AddFriendModal from './AddFriendModal';
 
-const data = ['All', 'Groups', 'Personal']
+const data = ['All', 'Groups', 'Personal'];
 
 const SearchFilter = () => {
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-3 border-b border-gray-200 p-4 dark:border-gray-700">
@@ -13,7 +16,13 @@ const SearchFilter = () => {
           placeholder="Search contacts..."
           className="focus:border-primary w-full rounded-md border border-gray-300 p-2 focus:ring focus:outline-none"
         />
-        <Button variant="default"><UserPlus/> New</Button>
+        <Button onClick={() => setIsModalOpen(true)} variant="default">
+          <UserPlus /> New
+        </Button>
+        <AddFriendModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
       </div>
       <div className="flex flex-wrap gap-2 p-2">
         {data.map((item, index) => (
@@ -26,7 +35,7 @@ const SearchFilter = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SearchFilter
+export default SearchFilter;

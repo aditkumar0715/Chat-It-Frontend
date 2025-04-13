@@ -35,3 +35,14 @@ export const loginSchema = z.object({
   email: z.string().nonempty({ message: 'This field is required.' }),
   password: z.string().min(6, 'Password must be at least 6 characters long.'),
 });
+
+export const friendSchema = z.object({
+  _id: z.string(),
+  name: z.string(),
+  avatar: z.string().url(),
+  username: z.string(),
+});
+
+export const AddFriendSchema = z.object({
+  username: z.string().min(1, 'Username is required'),
+});

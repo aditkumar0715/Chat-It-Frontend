@@ -12,8 +12,6 @@ import { login } from '@/lib/redux/authSlice'; // Importing the login action
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
 
-
-
 const LoginPage: React.FC = () => {
   const [useUsername, setUseUsername] = useState(false); // Toggle between Username and Email
   const dispatch = useDispatch();
@@ -37,7 +35,7 @@ const LoginPage: React.FC = () => {
     console.log(response);
     toast.success('Login successful!'); // Display success message using toast
     // Redirect to the dashboard or home page after successful login
-    navigate("/chat");
+    navigate('/chat');
   };
 
   return (

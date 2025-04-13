@@ -1,6 +1,6 @@
-import React from 'react'
-import { Github, Linkedin, Coffee, Twitter } from 'lucide-react'
-import Logo from './Logo'
+import React from 'react';
+import { Github, Linkedin, Coffee, Twitter } from 'lucide-react';
+import Logo from './Logo';
 
 const Footer: React.FC = () => {
   return (
@@ -84,7 +84,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

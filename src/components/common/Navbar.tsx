@@ -174,7 +174,7 @@ function Navbar() {
       {menuOpen && (
         <div
           className={cn(
-            'relative z-10 border-b-2 bg-popover transition-all duration-500 ease-in-out md:hidden',
+            'bg-popover relative z-10 border-b-2 transition-all duration-500 ease-in-out md:hidden',
             menuOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
           )}
         >
