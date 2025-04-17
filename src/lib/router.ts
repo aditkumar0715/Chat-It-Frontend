@@ -32,8 +32,15 @@ const router = createBrowserRouter([
         Component: UpdateProfile,
       },
       {
-        path: 'me',
+        path: 'user',
         Component: MyDetailsPage,
+        children: [
+          {
+            index: true,
+            Component: MyDetailsPage,
+          }
+          
+        ]
       },
       {
         path: 'chat',

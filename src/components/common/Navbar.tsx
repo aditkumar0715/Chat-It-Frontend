@@ -144,7 +144,7 @@ function Navbar() {
                   <div className="bg-popover absolute right-0 mt-2 w-48 rounded-lg shadow-lg">
                     <Link
                       onClick={() => setIsUserMenuOpen(false)}
-                      to="/me"
+                      to="/user"
                       className="text-foreground hover:bg-secondary/50 block px-4 py-2"
                     >
                       me

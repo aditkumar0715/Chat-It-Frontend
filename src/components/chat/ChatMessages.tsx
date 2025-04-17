@@ -1,25 +1,27 @@
-const ChatMessages = ({
-  messages,
-}: {
-  messages: { id: number; text: string; from: string }[];
-}) => {
+import { ChatMessagesProps } from '@/types/types';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/lib/redux/store';
+
+const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
+  const user = useSelector((state: RootState) => state.auth.user);
   return (
-    <div className="h-full flex-1 space-y-4 overflow-auto bg-gray-50 p-4 dark:bg-gray-900">
+    <div className="bg-background h-full flex-1 space-y-4 overflow-auto p-4">
       {messages.map((msg) => (
         <div
-          key={msg.id}
+          key={msg._id}
           className={`flex ${
-            msg.from === 'self' ? 'justify-end' : 'justify-start'
+            msg?.sender === user?._id ? 'justify-end' : 'justify-start'
           }`}
         >
           <div
             className={`max-w-xs rounded-lg p-3 ${
-              msg.from === 'self'
-                ? 'rounded-br-none bg-blue-500 text-white'
-                : 'rounded-bl-none bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-100'
+              msg.sender === user?._id
+                ? 'bg-primary text-secondary-foreground rounded-br-none'
+                : 'bg-secondary text-secondary-foreground rounded-bl-none'
             }`}
           >
-            {msg.text}
+            {msg.content}
           </div>
         </div>
       ))}

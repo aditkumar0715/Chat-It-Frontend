@@ -16,3 +16,32 @@ export interface AddFriendModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
+export interface Message {
+  _id: string;
+  content: string;
+  senderId: string;
+  createdAt: string;
+  sender?: string;
+}
+
+export interface JoinRoomPayload {
+  roomId: string;
+  userId: string;
+}
+
+export interface SendMessagePayload {
+  roomId: string;
+  senderId: string;
+  message: string;
+}
+
+export interface ChatFormProps {
+  messageInput: string;
+  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSendMessage: (e: React.FormEvent) => void;
+}
+
+export interface ChatMessagesProps {
+  messages: Message[];
+}
